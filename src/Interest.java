@@ -1,8 +1,8 @@
 public class Interest {
-    private double Rate = 0.0;
+    private double Rate;
 
     public Interest(int interestRate) {
-        this.Rate = (double)(interestRate);
+        this.Rate = interestRate;
     }
 
     public Euro calculateInterest(Euro amount) {

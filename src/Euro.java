@@ -39,25 +39,3 @@ public class Euro {
         return new Euro((int)(this.value * rate) / 100);
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
