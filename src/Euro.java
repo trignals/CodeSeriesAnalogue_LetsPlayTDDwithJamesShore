@@ -35,7 +35,11 @@ public class Euro {
         return Double.doubleToLongBits(value) == Double.doubleToLongBits(other.value);
     }
 
-    public Euro percentage(double rate) {
+    public Euro percent(double rate) {
         return new Euro((int)(this.value * rate) / 100);
+    }
+
+    public boolean isOverdrawn() {
+        return this.value < 0;
     }
 }

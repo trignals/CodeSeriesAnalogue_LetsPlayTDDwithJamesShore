@@ -1,57 +1,112 @@
 public class AccountYear {
-    private TaxRate netGains;
-    private Euro deposit = new Euro(0);
     private Euro startPrincipal = new Euro(0);
-    public Euro startNetGains = new Euro(0);
-    public Euro endNetGains = new Euro(0);
-    private Interest interestRate;
-    private TaxRate capitalGains;
+    private Euro startProfit = new Euro(0);
+    private Euro principalWithdrawn = new Euro(0);
+    private Euro profitWithdrawn = new Euro(0);
+    private Euro deposit = new Euro(0);
+    private Rate interest = new Rate(0);
+    private Rate capitalGains = new Rate(0);
 
 
     public AccountYear() {
     }
 
-    public AccountYear(Euro startingPrincipal) {
-        this.startPrincipal = startingPrincipal;
+    public AccountYear(Euro startPrincipal) {
+        this.startPrincipal = startPrincipal;
     }
 
-    public AccountYear(Euro startingPrincipal, Interest interestRate) {
+    public AccountYear(Euro startingPrincipal, Rate interest) {
         this.startPrincipal = startingPrincipal;
-        this.interestRate = interestRate;
+        this.interest = interest;
     }
 
-    public AccountYear(Euro startingPrincipal, Euro startingCapitalGains, Interest interestRate) {
-        this.startPrincipal = startingPrincipal;
-        this.startNetGains = startingCapitalGains;
-        this.interestRate = interestRate;
+    public AccountYear(Euro startPrincipal, Euro startProfit, Rate interest) {
+        this.startPrincipal = startPrincipal;
+        this.startProfit = startProfit;
+        this.interest = interest;
     }
 
-    public AccountYear(Euro startingPrincipal, Euro startingNetGains, Interest interestRate, TaxRate netGains) {
-        this.startPrincipal = startingPrincipal;
-        this.startNetGains = startingNetGains;
-        this.interestRate = interestRate;
-        this.capitalGains = netGains;
+    public AccountYear(Euro startPrincipal, Euro startProfit, Rate interest, Rate capitalGainsTax) {
+        this.startPrincipal = startPrincipal;
+        this.startProfit = startProfit;
+        this.interest = interest;
+        this.capitalGains = capitalGainsTax;
     }
 
+
+    public Euro startNetTotal() {
+        return startPrincipal.plus(startProfit);
+    }
+
+    public Euro fullTermPrincipal() {
+        return startPrincipal.minus(principalWithdrawn);
+    }
+
+    public Rate netGrowthForPrincipal() {
+        return interest.combinedRate(capitalGains.inverseRate());
+    }
+
+    public Euro fullTermProfit() {
+        return startProfit.minus(profitWithdrawn);
+    }
+
+    public Rate netGrowthForProfit() {
+        return interest;
+    }
+
+    public Euro balanceOfDeposits() {
+        return deposit;
+    }
+
+    public Euro netProfitIncrease() {
+        return netGrowthForPrincipal().appreciate(fullTermPrincipal()).plus(netGrowthForProfit().appreciate(fullTermProfit()));
+    }
+
+    public Euro endNetTotal() {
+        return principalBroughtForward().plus(profitBroughtForward());
+    }
+
+    public AccountYear newYear() {
+        return new AccountYear(principalBroughtForward(), profitBroughtForward(), interest, capitalGains);
+    }
 
     public void deposit(Euro amount) {
         deposit = deposit.plus(amount);
     }
 
-    public Euro testBalance() {
-        return startNetGains.plus(startPrincipal.plus(deposit));
-    }
-
-    public void withdraw(Euro amount) {
+    public void withdrawAmount(Euro amount) {
         deposit = deposit.minus(amount);
+        if (deposit.isOverdrawn()) {
+            withdrawPrincipal();
+        }
     }
 
-    public void newYear() {
-        this.endNetGains = startNetGains.plus(this.interestRate.calculateInterest(startPrincipal.plus(startNetGains)));
+    private void withdrawPrincipal() {
+        principalWithdrawn = principalWithdrawn.minus(deposit);
+        deposit = new Euro(0);
+        if (fullTermPrincipal().isOverdrawn()) {
+            withdrawProfit();
+        }
     }
 
-    public Euro grossProfit() {
-        return startNetGains.plus(capitalGains.dueForNet(startNetGains));
+    private void withdrawProfit() {
+        profitWithdrawn = profitWithdrawn.minus(fullTermPrincipal());
+        principalWithdrawn = startPrincipal;
+        if (fullTermProfit().isOverdrawn()) {
+            overdrawAccount();
+        }
     }
 
+    private void overdrawAccount() {
+        deposit = fullTermProfit();
+        profitWithdrawn = startProfit;
+    }
+
+    private Euro principalBroughtForward() {
+        return fullTermPrincipal().plus(deposit);
+    }
+
+    private Euro profitBroughtForward() {
+        return fullTermProfit().plus(netProfitIncrease());
+    }
 }
