@@ -58,7 +58,7 @@ public class AccountYear {
         return deposit;
     }
 
-    public Euro netProfitIncrease() {
+    public Euro netProfitGenerated() {
         return netGrowthForPrincipal().appreciate(fullTermPrincipal()).plus(netGrowthForProfit().appreciate(fullTermProfit()));
     }
 
@@ -107,6 +107,6 @@ public class AccountYear {
     }
 
     private Euro profitBroughtForward() {
-        return fullTermProfit().plus(netProfitIncrease());
+        return fullTermProfit().plus(netProfitGenerated());
     }
 }

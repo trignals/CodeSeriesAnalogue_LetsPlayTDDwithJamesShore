@@ -18,10 +18,10 @@ public class AccountYearTest {
         AccountYear account = new AccountYear(new Euro(100));
         assertEquals("€100", account.endNetTotal().toString());
         AccountYear account2 = new AccountYear(new Euro(2000), new Rate(10));
-        assertEquals("€200", account2.netProfitIncrease().toString());
+        assertEquals("€200", account2.netProfitGenerated().toString());
         AccountYear account3 = new AccountYear(new Euro(3700), new Euro(300), new Rate(10));
         account3.newYear();
-        assertEquals("€400", account3.netProfitIncrease().toString());
+        assertEquals("€400", account3.netProfitGenerated().toString());
     }
 
     @Test
@@ -33,7 +33,7 @@ public class AccountYearTest {
         assertEquals("7.5%", account.netGrowthForPrincipal().toString());
         assertEquals("10.0%", account.netGrowthForProfit().toString());
         assertEquals("€0", account.balanceOfDeposits().toString());
-        assertEquals("€950", account.netProfitIncrease().toString());
+        assertEquals("€950", account.netProfitGenerated().toString());
         assertEquals("€12950", account.endNetTotal().toString());
     }
 
@@ -48,7 +48,7 @@ public class AccountYearTest {
         assertEquals("7.5%", account2021.netGrowthForPrincipal().toString());
         assertEquals("10.0%", account2021.netGrowthForProfit().toString());
         assertEquals("€0", account2021.balanceOfDeposits().toString());
-        assertEquals("€1495", account2021.netProfitIncrease().toString());
+        assertEquals("€1495", account2021.netProfitGenerated().toString());
         assertEquals("€20445", account2021.endNetTotal().toString());
     }
 
@@ -96,7 +96,7 @@ public class AccountYearTest {
         assertEquals("7.5%", account2020.netGrowthForPrincipal().toString());
         assertEquals("10.0%", account2020.netGrowthForProfit().toString());
         assertEquals("€5000", account2020.balanceOfDeposits().toString());
-        assertEquals("€225", account2020.netProfitIncrease().toString());
+        assertEquals("€225", account2020.netProfitGenerated().toString());
         assertEquals("€7475", account2020.endNetTotal().toString());
         AccountYear account2021 = account2020.newYear();
         account2021.withdrawAmount(new Euro(2725));
@@ -107,7 +107,7 @@ public class AccountYearTest {
         assertEquals("7.5%", account2021.netGrowthForPrincipal().toString());
         assertEquals("10.0%", account2021.netGrowthForProfit().toString());
         assertEquals("€11500", account2021.balanceOfDeposits().toString());
-        assertEquals("€417", account2021.netProfitIncrease().toString());
+        assertEquals("€417", account2021.netProfitGenerated().toString());
         assertEquals("€16667", account2021.endNetTotal().toString());
     }
 }
