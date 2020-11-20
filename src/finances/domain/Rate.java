@@ -1,7 +1,12 @@
+package finances.domain;
+
+import finances.util.Require;
+
 public class Rate {
     private double percent;
 
     public Rate(double percent) {
+        Require.that(percent > 0, "Rate Must be greater than 0; was " + percent);
         this.percent = percent;
     }
 

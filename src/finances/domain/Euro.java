@@ -1,4 +1,4 @@
-import java.util.Objects;
+package finances.domain;
 
 public class Euro {
     private int value;

@@ -1,3 +1,7 @@
+package finances.domain;
+
+import finances.domain.*;
+
 import org.junit.Test;
 
 import static org.junit.Assert.*;

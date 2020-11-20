@@ -1,40 +1,29 @@
+package finances.domain;
+
 public class AccountYear {
+    private int year;
     private Euro startPrincipal = new Euro(0);
     private Euro startProfit = new Euro(0);
     private Euro principalWithdrawn = new Euro(0);
     private Euro profitWithdrawn = new Euro(0);
     private Euro deposit = new Euro(0);
-    private Rate interest = new Rate(0);
-    private Rate capitalGains = new Rate(0);
+    private Rate interest;
+    private Rate capitalGains;
 
 
-    public AccountYear() {
-    }
-
-    public AccountYear(Euro startPrincipal) {
-        this.startPrincipal = startPrincipal;
-    }
-
-    public AccountYear(Euro startingPrincipal, Rate interest) {
-        this.startPrincipal = startingPrincipal;
-        this.interest = interest;
-    }
-
-    public AccountYear(Euro startPrincipal, Euro startProfit, Rate interest) {
-        this.startPrincipal = startPrincipal;
-        this.startProfit = startProfit;
-        this.interest = interest;
-    }
-
-    public AccountYear(Euro startPrincipal, Euro startProfit, Rate interest, Rate capitalGainsTax) {
+    public AccountYear(int year, Euro startPrincipal, Euro startProfit, Rate interest, Rate capitalGainsTax) {
+        this.year = year;
         this.startPrincipal = startPrincipal;
         this.startProfit = startProfit;
         this.interest = interest;
         this.capitalGains = capitalGainsTax;
     }
 
+    public int year(){
+        return this.year;
+    }
 
-    public Euro startNetTotal() {
+    public Euro netTotalStart() {
         return startPrincipal.plus(startProfit);
     }
 
@@ -42,7 +31,7 @@ public class AccountYear {
         return startPrincipal.minus(principalWithdrawn);
     }
 
-    public Rate netGrowthForPrincipal() {
+    public Rate principalNetGrowth() {
         return interest.combinedRate(capitalGains.inverseRate());
     }
 
@@ -50,7 +39,7 @@ public class AccountYear {
         return startProfit.minus(profitWithdrawn);
     }
 
-    public Rate netGrowthForProfit() {
+    public Rate profitNetGrowth() {
         return interest;
     }
 
@@ -59,15 +48,15 @@ public class AccountYear {
     }
 
     public Euro netProfitGenerated() {
-        return netGrowthForPrincipal().appreciate(fullTermPrincipal()).plus(netGrowthForProfit().appreciate(fullTermProfit()));
+        return principalNetGrowth().appreciate(fullTermPrincipal()).plus(profitNetGrowth().appreciate(fullTermProfit()));
     }
 
-    public Euro endNetTotal() {
+    public Euro netTotalEnd() {
         return principalBroughtForward().plus(profitBroughtForward());
     }
 
     public AccountYear newYear() {
-        return new AccountYear(principalBroughtForward(), profitBroughtForward(), interest, capitalGains);
+        return new AccountYear(year + 1, principalBroughtForward(), profitBroughtForward(), interest, capitalGains);
     }
 
     public void deposit(Euro amount) {
