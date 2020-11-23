@@ -38,4 +38,17 @@ public class EuroTest {
         assertNotEquals(amount1a.hashCode(), amount2.hashCode());
     }
 
+    @Test
+    public void equalsRoundsToNearestEuro() {
+        assertTrue("round down", new Euro(10).equals(new Euro(10.10)));
+        assertTrue("round up", new Euro(11).equals(new Euro(10.90)));
+        assertTrue("round up from .5", new Euro(11).equals(new Euro(10.50)));
+    }
+
+    @Test
+    public void toStringRoundsToNearestEuro() {
+        assertEquals("round down", new Euro(10).toString(), new Euro(10.10).toString());
+        assertEquals("round up", new Euro(11).toString(), new Euro(10.90).toString());
+        assertEquals("round up from .5", new Euro(11).toString(), new Euro(10.50).toString());
+    }
 }

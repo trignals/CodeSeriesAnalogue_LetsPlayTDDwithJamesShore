@@ -1,9 +1,15 @@
 package finances.domain;
 
+import finances.util.Require;
+
 public class Euro {
-    private int value;
+    private double value;
 
     public Euro(int amount) {
+        this.value = amount;
+    }
+
+    public Euro(double amount) {
         this.value = amount;
     }
 
@@ -17,7 +23,7 @@ public class Euro {
 
     @Override
     public String toString() {
-        return "€" + value;
+        return "€" + toNearestEuro();
     }
 
     @Override
@@ -29,14 +35,16 @@ public class Euro {
 
     @Override
     public boolean equals(Object obj) {
-        if (obj == null) return false;
-        if (getClass() != obj.getClass()) return false;
-        Euro other = (Euro) obj;
-        return Double.doubleToLongBits(value) == Double.doubleToLongBits(other.value);
+        Euro that = (Euro)obj;
+        return this.toNearestEuro() == that.toNearestEuro();
+    }
+
+    private long toNearestEuro() {
+        return Math.round(this.value);
     }
 
     public Euro percent(double rate) {
-        return new Euro((int)(this.value * rate) / 100);
+        return new Euro((this.value * rate) / 100);
     }
 
     public boolean isOverdrawn() {

@@ -7,11 +7,11 @@ public class AccountYear {
     private Euro principalWithdrawn = new Euro(0);
     private Euro profitWithdrawn = new Euro(0);
     private Euro deposit = new Euro(0);
-    private Rate interest;
-    private Rate capitalGains;
+    private Percentage interest;
+    private Percentage capitalGains;
 
 
-    public AccountYear(int year, Euro startPrincipal, Euro startProfit, Rate interest, Rate capitalGainsTax) {
+    public AccountYear(int year, Euro startPrincipal, Euro startProfit, Percentage interest, Percentage capitalGainsTax) {
         this.year = year;
         this.startPrincipal = startPrincipal;
         this.startProfit = startProfit;
@@ -31,7 +31,7 @@ public class AccountYear {
         return startPrincipal.minus(principalWithdrawn);
     }
 
-    public Rate principalNetGrowth() {
+    public Percentage principalNetGrowth() {
         return interest.combinedRate(capitalGains.inverseRate());
     }
 
@@ -39,7 +39,7 @@ public class AccountYear {
         return startProfit.minus(profitWithdrawn);
     }
 
-    public Rate profitNetGrowth() {
+    public Percentage profitNetGrowth() {
         return interest;
     }
 

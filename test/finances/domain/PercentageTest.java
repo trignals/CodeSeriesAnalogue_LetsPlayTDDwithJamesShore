@@ -1,23 +1,21 @@
 package finances.domain;
 
-import finances.domain.*;
-
 import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-public class RateTest {
+public class PercentageTest {
 
     @Test
     public void constructorTest() {
-        Rate intrest = new Rate(10);
+        Percentage intrest = new Percentage(10);
         assertEquals("10.0%", intrest.toString());
     }
 
     @Test
     public void accrueInterest(){
-        Rate rate = new Rate(10);
-        assertEquals("€20", rate.appreciate(new Euro(200)).toString());
+        Percentage percentage = new Percentage(10);
+        assertEquals("€20", percentage.appreciate(new Euro(200)).toString());
     }
 
 }

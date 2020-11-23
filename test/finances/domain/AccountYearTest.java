@@ -1,7 +1,5 @@
 package finances.domain;
 
-import finances.domain.*;
-
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -9,7 +7,7 @@ public class AccountYearTest {
 
     @Test
     public void accessMethods() {
-        AccountYear account = new AccountYear(2020, new Euro(10000), new Euro(2000), new Rate(10), new Rate(25));
+        AccountYear account = new AccountYear(2020, new Euro(10000), new Euro(2000), new Percentage(10), new Percentage(25));
         assertEquals("€12000", account.netTotalStart().toString());
         assertEquals("€10000", account.fullTermPrincipal().toString());
         assertEquals("€2000", account.fullTermProfit().toString());
@@ -22,7 +20,7 @@ public class AccountYearTest {
 
     @Test
     public void startNewYear() {
-        AccountYear account2020 = new AccountYear(2020, new Euro(10000), new Euro(2000), new Rate(10), new Rate(25));
+        AccountYear account2020 = new AccountYear(2020, new Euro(10000), new Euro(2000), new Percentage(10), new Percentage(25));
         account2020.deposit(new Euro(6000));
         AccountYear account2021 = account2020.newYear();
         assertEquals(2020, account2020.year());
@@ -39,7 +37,7 @@ public class AccountYearTest {
 
     @Test
     public void withdrawPrincipal() {
-        AccountYear account = new AccountYear(2020, new Euro(10000), new Euro(2000), new Rate(10), new Rate(25));
+        AccountYear account = new AccountYear(2020, new Euro(10000), new Euro(2000), new Percentage(10), new Percentage(25));
         account.withdrawAmount(new Euro(4000));
         assertEquals("€12000", account.netTotalStart().toString());
         assertEquals("€0", account.balanceOfDeposits().toString());
@@ -48,7 +46,7 @@ public class AccountYearTest {
 
     @Test
     public void withdrawProfit() {
-        AccountYear account = new AccountYear(2020, new Euro(10000), new Euro(2000), new Rate(10), new Rate(25));
+        AccountYear account = new AccountYear(2020, new Euro(10000), new Euro(2000), new Percentage(10), new Percentage(25));
         account.withdrawAmount(new Euro(11000));
         assertEquals("€12000", account.netTotalStart().toString());
         assertEquals("€0", account.balanceOfDeposits().toString());
@@ -58,7 +56,7 @@ public class AccountYearTest {
 
     @Test
     public void showAccountOverdrawnAsNegativeDeposit() {
-        AccountYear account = new AccountYear(2020, new Euro(10000), new Euro(2000), new Rate(10), new Rate(25));
+        AccountYear account = new AccountYear(2020, new Euro(10000), new Euro(2000), new Percentage(10), new Percentage(25));
         account.withdrawAmount(new Euro(13000));
         assertEquals("€12000", account.netTotalStart().toString());
         assertEquals("€-1000", account.balanceOfDeposits().toString());
@@ -70,7 +68,7 @@ public class AccountYearTest {
 
     @Test
     public void twoYearsAccountUsage() {
-        AccountYear account2020 = new AccountYear(2020, new Euro(7000), new Euro(3000), new Rate(10), new Rate(25));
+        AccountYear account2020 = new AccountYear(2020, new Euro(7000), new Euro(3000), new Percentage(10), new Percentage(25));
         account2020.deposit(new Euro(11000));
         account2020.withdrawAmount(new Euro(11000));
         account2020.withdrawAmount(new Euro(7750));
@@ -92,7 +90,7 @@ public class AccountYearTest {
         assertEquals("7.5%", account2021.principalNetGrowth().toString());
         assertEquals("10.0%", account2021.profitNetGrowth().toString());
         assertEquals("€11500", account2021.balanceOfDeposits().toString());
-        assertEquals("€417", account2021.netProfitGenerated().toString());
-        assertEquals("€16667", account2021.netTotalEnd().toString());
+        assertEquals("€418", account2021.netProfitGenerated().toString());
+        assertEquals("€16668", account2021.netTotalEnd().toString());
     }
 }

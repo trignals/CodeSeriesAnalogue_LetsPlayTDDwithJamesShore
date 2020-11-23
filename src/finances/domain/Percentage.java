@@ -2,20 +2,20 @@ package finances.domain;
 
 import finances.util.Require;
 
-public class Rate {
+public class Percentage {
     private double percent;
 
-    public Rate(double percent) {
+    public Percentage(double percent) {
         Require.that(percent > 0, "Rate Must be greater than 0; was " + percent);
         this.percent = percent;
     }
 
-    public Rate combinedRate(Rate otherRate) {
-        return new Rate(this.percent * otherRate.percent / 100 );
+    public Percentage combinedRate(Percentage otherPercentage) {
+        return new Percentage(this.percent * otherPercentage.percent / 100 );
     }
 
-    public Rate inverseRate() {
-        return new Rate(100 - this.percent);
+    public Percentage inverseRate() {
+        return new Percentage(100 - this.percent);
     }
 
     public Euro appreciate(Euro amount) {

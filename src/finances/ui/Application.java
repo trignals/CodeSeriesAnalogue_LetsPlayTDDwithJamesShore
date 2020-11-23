@@ -18,7 +18,7 @@ public class Application extends JFrame {
 
     private JScrollPane table() {
         AccountYear startingYear = new AccountYear(2020, new Euro(10000), new Euro(3000),
-                new Rate(10), new Rate(25));
+                new Percentage(10), new Percentage(25));
         ProjectionTableModel model = new ProjectionTableModel(new Projection(40, startingYear));
 
         JTable table = new JTable(model);

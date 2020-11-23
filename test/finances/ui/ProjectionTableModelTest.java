@@ -5,8 +5,7 @@ import static org.junit.Assert.*;
 import finances.domain.AccountYear;
 import finances.domain.Euro;
 import finances.domain.Projection;
-import finances.domain.Rate;
-import finances.ui.ProjectionTableModel;
+import finances.domain.Percentage;
 import org.junit.*;
 
 public class ProjectionTableModelTest {
@@ -15,8 +14,8 @@ public class ProjectionTableModelTest {
     private static final int DURATION = 40;
     public static final Euro STARTING_PRINCIPAL = new Euro(10000);
     public static final Euro STARTING_PROFIT = new Euro(3000);
-    public static final Rate INTEREST = new Rate(10);
-    public static final Rate CAPITAL_GAINS_TAX = new Rate(25);
+    public static final Percentage INTEREST = new Percentage(10);
+    public static final Percentage CAPITAL_GAINS_TAX = new Percentage(25);
     private ProjectionTableModel model;
 
     @Before
