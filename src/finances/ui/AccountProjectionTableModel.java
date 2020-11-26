@@ -5,13 +5,13 @@ import finances.util.UnreachableCodeException;
 
 import javax.swing.table.*;
 
-public class ProjectionTableModel extends AbstractTableModel {
+public class AccountProjectionTableModel extends AbstractTableModel {
     private static final String[] COLUMN_TITLES = {"Year", "Start Net Total", "End Net Total", "Deposits",
-            "Term Net Gain", "Principal Net finances.finances.finances.ui.finances.ui.domain.finances.ui.finances.finances.ui.finances.ui.domain.finances.ui.domain.Rate", "Full Term Principal", "Profit Net finances.finances.finances.ui.finances.ui.domain.finances.ui.finances.finances.ui.finances.ui.domain.finances.ui.domain.Rate", "Full Term Profit"};
-    private Projection projection;
+            "Term Net Gain", "Principal Net Rate", "Full Term Principal", "Profit Net Rate", "Full Term Profit"};
+    private AccountProjection accountProjection;
 
-    public ProjectionTableModel(Projection projection) {
-        this.projection = projection;
+    public AccountProjectionTableModel(AccountProjection accountProjection) {
+        this.accountProjection = accountProjection;
     }
 
     @Override
@@ -26,12 +26,12 @@ public class ProjectionTableModel extends AbstractTableModel {
 
     @Override
     public int getRowCount() {
-        return projection.duration();
+        return accountProjection.duration();
     }
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        AccountYear projectionYear = projection.projectionYear(rowIndex);
+        AccountYear projectionYear = accountProjection.projectionYear(rowIndex);
         switch (columnIndex) {
             case 0: return projectionYear.year();
             case 1: return projectionYear.netTotalStart();

@@ -2,10 +2,10 @@ package finances.domain;
 
 import finances.util.*;
 
-public class Projection {
+public class AccountProjection {
     private AccountYear[] projection;
 
-    public Projection(int duration, AccountYear firstAccountYear) {
+    public AccountProjection(int duration, AccountYear firstAccountYear) {
         this.projection = new AccountYear[duration + 1];
         projection[0] = firstAccountYear;
         for (int i = 0; i < duration; i++) {

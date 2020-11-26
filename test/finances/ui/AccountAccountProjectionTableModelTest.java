@@ -4,11 +4,11 @@ import static org.junit.Assert.*;
 
 import finances.domain.AccountYear;
 import finances.domain.Euro;
-import finances.domain.Projection;
+import finances.domain.AccountProjection;
 import finances.domain.Percentage;
 import org.junit.*;
 
-public class ProjectionTableModelTest {
+public class AccountAccountProjectionTableModelTest {
 
     private static final int FIRST_YEAR = 2020;
     private static final int DURATION = 40;
@@ -16,11 +16,11 @@ public class ProjectionTableModelTest {
     public static final Euro STARTING_PROFIT = new Euro(3000);
     public static final Percentage INTEREST = new Percentage(10);
     public static final Percentage CAPITAL_GAINS_TAX = new Percentage(25);
-    private ProjectionTableModel model;
+    private AccountProjectionTableModel model;
 
     @Before
     public void setup() {
-        model = new ProjectionTableModel(new Projection(DURATION, new AccountYear(FIRST_YEAR, STARTING_PRINCIPAL, STARTING_PROFIT, INTEREST, CAPITAL_GAINS_TAX)));
+        model = new AccountProjectionTableModel(new AccountProjection(DURATION, new AccountYear(FIRST_YEAR, STARTING_PRINCIPAL, STARTING_PROFIT, INTEREST, CAPITAL_GAINS_TAX)));
     }
 
     @Test

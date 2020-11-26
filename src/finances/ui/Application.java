@@ -1,11 +1,12 @@
 package finances.ui;
 
+import com.jamesshore.finances.ui.ForecastTable;
 import finances.domain.*;
 
 import java.awt.*;
 import javax.swing.*;
 
-public class Application extends JFrame {
+public class Application extends ApplicationFrame {
     private static final long serialVersionUID = 1L;
 
     public Application() {
@@ -19,9 +20,9 @@ public class Application extends JFrame {
     private JScrollPane table() {
         AccountYear startingYear = new AccountYear(2020, new Euro(10000), new Euro(3000),
                 new Percentage(10), new Percentage(25));
-        ProjectionTableModel model = new ProjectionTableModel(new Projection(40, startingYear));
+        AccountProjectionTableModel model = new AccountProjectionTableModel(new AccountProjection(40, startingYear));
 
-        JTable table = new JTable(model);
+        JTable table = new ForecastTable(model);
         return new JScrollPane(table);
     }
 
