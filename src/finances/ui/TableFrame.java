@@ -1,10 +1,10 @@
-package com.jamesshore.finances.ui;
+package finances.ui;
 import java.awt.*;
 import javax.swing.*;
 import javax.swing.table.*;
 
 
-public class ForecastTable extends JTable {
+public class TableFrame extends JTable {
     private static final long serialVersionUID = 1L;
 
     public static final Color EVEN_ROW_BACKGROUND_COLOUR = Color.WHITE;
@@ -12,7 +12,7 @@ public class ForecastTable extends JTable {
     public static final Color SELECTION_BACKGROUND_COLOUR = new Color(160, 160, 235);
 
 
-    public ForecastTable(TableModel model) {
+    public TableFrame(TableModel model) {
         super(model);
     }
 

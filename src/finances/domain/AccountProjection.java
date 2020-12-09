@@ -21,7 +21,7 @@ public class AccountProjection {
         return projection[projection.length - 1].year();
     }
 
-    public AccountYear projectionYear(int projectionYear) {
+    public AccountYear year(int projectionYear) {
         Require.that(projectionYear >= 0 && projectionYear < duration(),
                 "projectionYear must be between 0 and  " + (duration() - 1) + " was; " + projectionYear);
         return projection[projectionYear];
