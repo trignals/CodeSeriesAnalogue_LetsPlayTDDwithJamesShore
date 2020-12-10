@@ -89,4 +89,5 @@ public class TableFrameTest {
         assertEquals("Last year in forecast", 2060, model.getValueAt(40,0));
         assertEquals("Year 2 profit", new Euro(4050), model.getValueAt(1, 5));
     }
+
 }

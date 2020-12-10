@@ -1,7 +1,10 @@
 package finances.ui;
 
 import javax.swing.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import java.awt.*;
+import java.awt.event.*;
 
 public class ApplicationFrame extends JFrame {
     private static final long serialVersionUID = 1L;
@@ -9,10 +12,11 @@ public class ApplicationFrame extends JFrame {
     public static final String TITLE = "Account Projections";
     public static final Dimension INITIAL_SIZE = new Dimension(1200, 400);
     public static final Point INITIAL_POSITION = new Point(300, 300);
-    private ProjectionModel projectionModel = new ProjectionModel();
+    private ProjectionModel projectionModel;
 
-    public ApplicationFrame() {
+    public ApplicationFrame(ProjectionModel model) {
         super(TITLE);
+        this.projectionModel = model;
         this.setSize(INITIAL_SIZE);
         this.setLocation(INITIAL_POSITION);
         addComponents();
@@ -22,18 +26,23 @@ public class ApplicationFrame extends JFrame {
         Container contentPane = this.getContentPane();
         getContentPane().setLayout(new BorderLayout());
         contentPane.add(BorderLayout.CENTER, tableFrame());
-        contentPane.add(BorderLayout.NORTH, startingBalanceField());
+        contentPane.add(BorderLayout.NORTH, startingYearField());
     }
 
-    private JTextField startingBalanceField() {
+    public JTextField startingYearField() {
         JTextField field = new JTextField();
 
-        //TODO spike code re-do
-//        field.addActionListener(new ActionListener() {
-//            public void actionPerformed(ActionEvent e) {
-//                applicationModel.setStartYear(2013);
-//            }
-//        });
+        field.getDocument().addDocumentListener(new DocumentListener() {
+            @Override public void insertUpdate(DocumentEvent e) { updateStartingYear(); }
+            @Override public void removeUpdate(DocumentEvent e) { updateStartingYear(); }
+            @Override public void changedUpdate(DocumentEvent e) { updateStartingYear(); }
+            private void updateStartingYear() {
+                try {
+                    int value = Integer.parseInt(field.getText());
+                    projectionModel.setStartingYear(value);
+                } catch (NumberFormatException e) { }
+            }
+        });
         return field;
     }
 

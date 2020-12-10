@@ -1,16 +1,22 @@
 package finances.ui;
 
-import finances.domain.AccountProjection;
-import finances.domain.AccountYear;
+import finances.domain.*;
+import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 public class ProjectionModelTest {
 
+    private ProjectionModel model;
+
+    @Before
+    public void setup() {
+        model = new ProjectionModel();
+    }
+
     @Test
     public void shouldStartWithDefaultStockMarket() {
-        ProjectionModel model = new ProjectionModel();
         AccountProjection projection = model.tabulatedModel().getProjection();
 
         AccountYear startingYear = projection.year(0);
@@ -21,7 +27,14 @@ public class ProjectionModelTest {
     }
 
     @Test
-    public void TableFrameShouldUseProjection() {
+    public void shouldOnlyHaveOneInstanceOfTabulatedModel() {
+        assertTrue("should be same instance", model.tabulatedModel() == model.tabulatedModel());
+    }
+
+    @Test
+    public void changingStartingYearShouldChangeProjectionModel() {
+        model.setStartingYear(2021);
+        assertEquals(2021, model.tabulatedModel().startingYear());
 
     }
 
