@@ -1,24 +1,22 @@
 package finances.ui;
 
 import javax.swing.*;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
+import javax.swing.event.*;
 import java.awt.*;
-import java.awt.event.*;
 
 public class ApplicationFrame extends JFrame {
     private static final long serialVersionUID = 1L;
 
     public static final String TITLE = "Account Projections";
-    public static final Dimension INITIAL_SIZE = new Dimension(1200, 400);
     public static final Point INITIAL_POSITION = new Point(300, 300);
+    public static final Dimension INITIAL_SIZE = new Dimension(1200, 400);
     private ProjectionModel projectionModel;
 
-    public ApplicationFrame(ProjectionModel model) {
+    public ApplicationFrame(ProjectionModel projectionModel) {
         super(TITLE);
-        this.projectionModel = model;
-        this.setSize(INITIAL_SIZE);
+        this.projectionModel = projectionModel;
         this.setLocation(INITIAL_POSITION);
+        this.setSize(INITIAL_SIZE);
         addComponents();
     }
 
@@ -30,7 +28,7 @@ public class ApplicationFrame extends JFrame {
     }
 
     public JTextField startingYearField() {
-        JTextField field = new JTextField();
+        final YearTextField field = new YearTextField(2020);
 
         field.getDocument().addDocumentListener(new DocumentListener() {
             @Override public void insertUpdate(DocumentEvent e) { updateStartingYear(); }
@@ -38,9 +36,11 @@ public class ApplicationFrame extends JFrame {
             @Override public void changedUpdate(DocumentEvent e) { updateStartingYear(); }
             private void updateStartingYear() {
                 try {
-                    int value = Integer.parseInt(field.getText());
-                    projectionModel.setStartingYear(value);
-                } catch (NumberFormatException e) { }
+                    projectionModel.setStartingYear(field.getYear());
+                } catch (NumberFormatException e) {
+                    //TODO Need to strip out error handling
+                    System.out.println("ERROR: " + field.getText());
+                }
             }
         });
         return field;

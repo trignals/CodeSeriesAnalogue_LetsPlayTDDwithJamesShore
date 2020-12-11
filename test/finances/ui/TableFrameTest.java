@@ -2,10 +2,7 @@ package finances.ui;
 
 import static org.junit.Assert.*;
 
-import finances.domain.AccountYear;
-import finances.domain.Euro;
-import finances.domain.AccountProjection;
-import finances.domain.Percentage;
+import finances.domain.*;
 import org.junit.*;
 
 import javax.swing.event.TableModelEvent;
@@ -13,7 +10,7 @@ import javax.swing.event.TableModelListener;
 
 public class TableFrameTest {
 
-    private static final int STARTING_YEAR = 2020;
+    private static final Year STARTING_YEAR = new ValidYear(2020);
     private static final int DURATION = 40;
     public static final Euro STARTING_PRINCIPAL = new Euro(10000);
     public static final Euro STARTING_PROFIT = new Euro(3000);
@@ -86,7 +83,7 @@ public class TableFrameTest {
         assertEquals("Starting year", STARTING_YEAR, model.getValueAt(0,0));
         assertEquals("Starting principal", STARTING_PRINCIPAL, model.getValueAt(0,3));
         assertEquals("Starting profit", STARTING_PROFIT, model.getValueAt(0, 5));
-        assertEquals("Last year in forecast", 2060, model.getValueAt(40,0));
+        assertEquals("Last year in forecast", new ValidYear(2060), model.getValueAt(40,0));
         assertEquals("Year 2 profit", new Euro(4050), model.getValueAt(1, 5));
     }
 

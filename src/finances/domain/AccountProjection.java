@@ -17,7 +17,7 @@ public class AccountProjection {
         return projection.length;
     }
 
-    public int lastYear() {
+    public Year lastYear() {
         return projection[projection.length - 1].year();
     }
 

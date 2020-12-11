@@ -33,8 +33,8 @@ public class ProjectionModelTest {
 
     @Test
     public void changingStartingYearShouldChangeProjectionModel() {
-        model.setStartingYear(2021);
-        assertEquals(2021, model.tabulatedModel().startingYear());
+        model.setStartingYear(new ValidYear(2021));
+        assertEquals(new ValidYear(2021), model.tabulatedModel().startingYear());
 
     }
 

@@ -1,7 +1,7 @@
 package finances.domain;
 
 public class AccountYear {
-    private int year;
+    private Year year;
     private Euro startPrincipal = new Euro(0);
     private Euro startProfit = new Euro(0);
     private Euro principalWithdrawn = new Euro(0);
@@ -11,7 +11,7 @@ public class AccountYear {
     private Percentage capitalGains;
 
 
-    public AccountYear(int year, Euro startPrincipal, Euro startProfit, Percentage interest, Percentage capitalGainsTax) {
+    public AccountYear(Year year, Euro startPrincipal, Euro startProfit, Percentage interest, Percentage capitalGainsTax) {
         this.year = year;
         this.startPrincipal = startPrincipal;
         this.startProfit = startProfit;
@@ -19,7 +19,7 @@ public class AccountYear {
         this.capitalGains = capitalGainsTax;
     }
 
-    public int year(){
+    public Year year(){
         return this.year;
     }
 
@@ -56,7 +56,7 @@ public class AccountYear {
     }
 
     public AccountYear newYear() {
-        return new AccountYear(year + 1, principalBroughtForward(), profitBroughtForward(), interest, capitalGains);
+        return new AccountYear(new ValidYear(year.is() + 1), principalBroughtForward(), profitBroughtForward(), interest, capitalGains);
     }
 
     public void deposit(Euro amount) {

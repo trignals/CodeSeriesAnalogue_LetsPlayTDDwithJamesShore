@@ -1,13 +1,10 @@
 package finances.ui;
 
+import finances.domain.ValidYear;
+import finances.domain.Year;
 import org.junit.Test;
 
 import javax.swing.*;
-
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
 
 import static org.junit.Assert.*;
 
@@ -17,10 +14,10 @@ public class ApplicationFrameTest {
     @Test
     public void startingYearFieldShouldUpdateProjectionModelThroughAction() {
         class MockApplicationModel extends ProjectionModel {
-            public int setStartingYearCalledWith;
+            public Year setStartingYearCalledWith;
 
             @Override
-            public void setStartingYear(int startingYear) {
+            public void setStartingYear(Year startingYear) {
                 setStartingYearCalledWith = startingYear;
             }
 
@@ -30,7 +27,7 @@ public class ApplicationFrameTest {
 
         JTextField field = frame.startingYearField();
         field.setText("2035");
-        assertEquals("ProjectionModel should be updated", 2035, mockModel.setStartingYearCalledWith);
+        assertEquals("ProjectionModel should be updated", new ValidYear(2035), mockModel.setStartingYearCalledWith);
     }
 
 }

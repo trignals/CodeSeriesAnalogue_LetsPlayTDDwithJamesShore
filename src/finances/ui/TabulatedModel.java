@@ -62,7 +62,7 @@ public class TabulatedModel extends AbstractTableModel {
         }
     }
 
-    public int startingYear() {
+    public Year startingYear() {
         return projection.year(0).year();
     }
 
