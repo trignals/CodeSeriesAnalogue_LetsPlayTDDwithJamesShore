@@ -6,21 +6,12 @@ import static org.junit.Assert.*;
 
 public class YearTest {
     @Test
-    public void getYear() {
-        Year year = new ValidYear(2021);
-        assertEquals(2021, year.is());
+    public void parseIllegals() {
+        InvalidYear invalid = new InvalidYear();
+        ValidYear valid = new ValidYear(2001);
+        assertEquals("x", invalid, Year.parse("x"));
+        assertEquals("-40", invalid, Year.parse("-40"));
+        assertEquals("2001", valid, Year.parse("2001"));
     }
 
-    @Test
-    public void valueObject() {
-        Year year1a = new ValidYear(2010);
-        Year year1b = new ValidYear(2010);
-        Year year2 = new ValidYear(2020);
-
-        assertEquals(2010, year1a.is());
-        assertEquals(year1a, year1b);
-        assertNotEquals(year1a, year2);
-        assertEquals(year1a.hashCode(), year1b.hashCode());
-        assertNotEquals(year1a.hashCode(), year2.hashCode());
-    }
 }

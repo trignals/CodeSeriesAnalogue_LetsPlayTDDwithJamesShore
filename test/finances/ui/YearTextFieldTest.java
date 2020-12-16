@@ -1,5 +1,6 @@
 package finances.ui;
 
+import finances.domain.InvalidYear;
 import finances.domain.ValidYear;
 import finances.domain.Year;
 import org.junit.Test;
@@ -30,23 +31,20 @@ public class YearTextFieldTest {
     public void emptyString() {
         YearTextField field = new YearTextField(2021);
         field.setText("");
-        //TODO use InvalidYear here
-        assertEquals("emptyString is year 0", new ValidYear(0), field.getYear());
+        assertEquals("emptyString is an invalid year", new InvalidYear(), field.getYear());
     }
 
     @Test
     public void negatives() {
         YearTextField field = new YearTextField(2020);
         field.setText("-200");
-        //TODO use InvalidYear here
-        assertEquals("emptyString is year 0", new ValidYear(0), field.getYear());
+        assertEquals("emptyString is an invalid year", new InvalidYear(), field.getYear());
     }
 
     @Test
     public void nonNumbers() {
         YearTextField field = new YearTextField(2020);
         field.setText("20d");
-        //TODO use InvalidYear here
-        assertEquals("emptyString is year 0", new ValidYear(0), field.getYear());
+        assertEquals("emptyString is an invalid year", new InvalidYear(), field.getYear());
     }
 }

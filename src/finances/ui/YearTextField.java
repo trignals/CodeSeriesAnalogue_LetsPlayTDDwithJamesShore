@@ -1,5 +1,6 @@
 package finances.ui;
 
+import finances.domain.InvalidYear;
 import finances.domain.ValidYear;
 import finances.domain.Year;
 
@@ -14,13 +15,6 @@ public class YearTextField extends JTextField {
     }
 
     public Year getYear() {
-        String text = getText();
-        int value = 0;
-        try {
-            value = Integer.parseInt(text);
-        } catch(NumberFormatException e) {
-        }
-        if (value > 0) return new ValidYear(value);
-        return new ValidYear(0);
+        return Year.parse(getText());
     }
 }

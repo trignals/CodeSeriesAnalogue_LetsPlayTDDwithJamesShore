@@ -35,12 +35,7 @@ public class ApplicationFrame extends JFrame {
             @Override public void removeUpdate(DocumentEvent e) { updateStartingYear(); }
             @Override public void changedUpdate(DocumentEvent e) { updateStartingYear(); }
             private void updateStartingYear() {
-                try {
-                    projectionModel.setStartingYear(field.getYear());
-                } catch (NumberFormatException e) {
-                    //TODO Need to strip out error handling
-                    System.out.println("ERROR: " + field.getText());
-                }
+                projectionModel.setStartingYear(field.getYear());
             }
         });
         return field;

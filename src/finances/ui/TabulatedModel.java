@@ -6,29 +6,26 @@ import finances.util.UnreachableCodeException;
 import javax.swing.table.*;
 
 public class TabulatedModel extends AbstractTableModel {
+    private static final long serialVersionUID = 1L;
     private static final String[] COLUMN_TITLES = {"Year", "Start Net Total", "Deposits", "Full-Term Principal",
             "Net Growth Rate Principal", "Full-Term Gains", "Net Growth Rate Gains", "Net Generated", "End Net Total"};
+    private static final Class<?>[] COLUMN_CLASSES = { SelfRenderable.class, Euro.class, Euro.class, Euro.class,
+            Percentage.class, Euro.class, Percentage.class, Euro.class, Euro.class};
+
     private AccountProjection projection;
-
-
-    public TabulatedModel(AccountProjection projection) {
-        this.projection = projection;
-    }
 
     public void setProjection(AccountProjection projection) {
         this.projection = projection;
         this.fireTableDataChanged();
     }
 
-    public AccountProjection getProjection() {
-        return projection;
+    public TabulatedModel(AccountProjection projection) {
+        this.projection = projection;
     }
 
-    //TODO spike code re-do
-//    public void setProjection(AccountProjection projection) {
-//        this.projection = projection;
-//        this.fireTableDataChanged();
-//    }
+    public AccountProjection accountProjection() {
+        return projection;
+    }
 
     @Override
     public int getColumnCount() {
@@ -38,6 +35,11 @@ public class TabulatedModel extends AbstractTableModel {
     @Override
     public String getColumnName(int column) {
         return COLUMN_TITLES[column];
+    }
+
+    @Override
+    public Class<?> getColumnClass(int column) {
+        return COLUMN_CLASSES[column];
     }
 
     @Override

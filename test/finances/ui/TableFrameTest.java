@@ -5,8 +5,9 @@ import static org.junit.Assert.*;
 import finances.domain.*;
 import org.junit.*;
 
-import javax.swing.event.TableModelEvent;
-import javax.swing.event.TableModelListener;
+import javax.swing.*;
+import javax.swing.event.*;
+import javax.swing.table.*;
 
 public class TableFrameTest {
 
@@ -43,7 +44,7 @@ public class TableFrameTest {
     public void changingTheProjectionShouldChangeTableModel () {
         AccountProjection projection = new AccountProjection(0, startingYear);
         model.setProjection(projection);
-        assertEquals("projection should have changed", projection, model.getProjection());
+        assertEquals("projection should have changed", projection, model.accountProjection());
         assertEquals("change to projection should reflect in methods", 1, model.getRowCount());
     }
 
@@ -85,6 +86,30 @@ public class TableFrameTest {
         assertEquals("Starting profit", STARTING_PROFIT, model.getValueAt(0, 5));
         assertEquals("Last year in forecast", new ValidYear(2060), model.getValueAt(40,0));
         assertEquals("Year 2 profit", new Euro(4050), model.getValueAt(1, 5));
+    }
+
+    @Test
+    @SuppressWarnings("serial")
+    public void tableShouldHaveSelfRenderableObjectRenderThemselves() {
+        SelfRenderable renderable = new SelfRenderable() {
+            public void render(JLabel label) {
+                label.setText("I rendered myself");
+            }
+        };
+        DefaultTableModel tableModel = new DefaultTableModel(0, 1) {
+            public Class<?> getColumnClass(int column) {
+                return SelfRenderable.class;
+            }
+        };
+        tableModel.addRow(new SelfRenderable[] { renderable });
+        JTable table = new TableFrame(tableModel);
+        assertEquals("I rendered myself", getCellText(table, 0, 0));
+    }
+
+    private String getCellText(JTable table, int row, int column) {
+        TableCellRenderer renderer = table.getCellRenderer(row, column);
+        JLabel label = (JLabel) table.prepareRenderer(renderer, row, column);
+        return label.getText();
     }
 
 }

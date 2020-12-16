@@ -17,7 +17,7 @@ public class ProjectionModelTest {
 
     @Test
     public void shouldStartWithDefaultStockMarket() {
-        AccountProjection projection = model.tabulatedModel().getProjection();
+        AccountProjection projection = model.tabulatedModel().accountProjection();
 
         AccountYear startingYear = projection.year(0);
         assertEquals(ProjectionModel.DEFAULT_STARTING_YEAR, startingYear.year());

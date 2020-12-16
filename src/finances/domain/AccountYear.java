@@ -56,7 +56,7 @@ public class AccountYear {
     }
 
     public AccountYear newYear() {
-        return new AccountYear(new ValidYear(year.is() + 1), principalBroughtForward(), profitBroughtForward(), interest, capitalGains);
+        return new AccountYear(year.subsequentYear(), principalBroughtForward(), profitBroughtForward(), interest, capitalGains);
     }
 
     public void deposit(Euro amount) {
