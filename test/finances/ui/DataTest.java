@@ -4,15 +4,17 @@ import finances.domain.*;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.Calendar;
+
 import static org.junit.Assert.*;
 
-public class ProjectionModelTest {
+public class DataTest {
 
-    private ProjectionModel model;
+    private Data model;
 
     @Before
     public void setup() {
-        model = new ProjectionModel();
+        model = new Data();
     }
 
     @Test
@@ -20,8 +22,8 @@ public class ProjectionModelTest {
         AccountProjection projection = model.tabulatedModel().accountProjection();
 
         AccountYear startingYear = projection.year(0);
-        assertEquals(ProjectionModel.DEFAULT_STARTING_YEAR, startingYear.year());
-        assertEquals(ProjectionModel.DEFAULT_INTEREST, startingYear.profitNetGrowth());
+        assertEquals(new ValidYear(Calendar.getInstance().get(Calendar.YEAR)), startingYear.year());
+        assertEquals(Data.DEFAULT_INTEREST, startingYear.profitNetGrowth());
 
         assertEquals(41, projection.duration());
     }

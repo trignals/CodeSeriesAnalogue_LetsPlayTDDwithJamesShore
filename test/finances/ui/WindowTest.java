@@ -8,12 +8,13 @@ import javax.swing.*;
 
 import static org.junit.Assert.*;
 
-public class ApplicationFrameTest {
-    private ApplicationFrame frame = new ApplicationFrame(new ProjectionModel());
+public class WindowTest {
+    private Data model = new Data();
+    private Window frame = new Window(model);
 
     @Test
     public void startingYearFieldShouldUpdateProjectionModelThroughAction() {
-        class MockApplicationModel extends ProjectionModel {
+        class MockApplication extends Data {
             public Year setStartingYearCalledWith;
 
             @Override
@@ -22,12 +23,17 @@ public class ApplicationFrameTest {
             }
 
         }
-        MockApplicationModel mockModel = new MockApplicationModel();
-        frame = new ApplicationFrame(mockModel);
+        MockApplication mockModel = new MockApplication();
+        frame = new Window(mockModel);
 
         JTextField field = frame.startingYearField();
         field.setText("2035");
         assertEquals("ProjectionModel should be updated", new ValidYear(2035), mockModel.setStartingYearCalledWith);
+    }
+
+    @Test
+    public void startingYearShouldBeInitialisedToModelsValue() {
+        assertEquals("starting balance field text", model.startingYear(), Year.parse(frame.startingYearField().getText()));
     }
 
 }

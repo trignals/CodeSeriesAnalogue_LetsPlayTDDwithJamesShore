@@ -5,11 +5,11 @@ import finances.util.UnreachableCodeException;
 
 import javax.swing.table.*;
 
-public class TabulatedModel extends AbstractTableModel {
+public class TableStructure extends AbstractTableModel {
     private static final long serialVersionUID = 1L;
     private static final String[] COLUMN_TITLES = {"Year", "Start Net Total", "Deposits", "Full-Term Principal",
             "Net Growth Rate Principal", "Full-Term Gains", "Net Growth Rate Gains", "Net Generated", "End Net Total"};
-    private static final Class<?>[] COLUMN_CLASSES = { SelfRenderable.class, Euro.class, Euro.class, Euro.class,
+    private static final Class<?>[] COLUMN_CLASSES = { SelfRendering.class, Euro.class, Euro.class, Euro.class,
             Percentage.class, Euro.class, Percentage.class, Euro.class, Euro.class};
 
     private AccountProjection projection;
@@ -19,7 +19,7 @@ public class TabulatedModel extends AbstractTableModel {
         this.fireTableDataChanged();
     }
 
-    public TabulatedModel(AccountProjection projection) {
+    public TableStructure(AccountProjection projection) {
         this.projection = projection;
     }
 

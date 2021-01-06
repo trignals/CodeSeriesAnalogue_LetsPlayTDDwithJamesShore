@@ -8,7 +8,7 @@ public class Application {
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-                new ApplicationFrame(new ProjectionModel()).setVisible(true);
+                new Window(new Data()).setVisible(true);
             }
         });
     }

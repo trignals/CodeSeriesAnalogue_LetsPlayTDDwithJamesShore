@@ -3,13 +3,14 @@ package finances.ui;
 import static org.junit.Assert.*;
 
 import finances.domain.*;
+import finances.util.Resource;
 import org.junit.*;
 
 import javax.swing.*;
 import javax.swing.event.*;
 import javax.swing.table.*;
 
-public class TableFrameTest {
+public class TableTest {
 
     private static final Year STARTING_YEAR = new ValidYear(2020);
     private static final int DURATION = 40;
@@ -18,7 +19,7 @@ public class TableFrameTest {
     public static final Percentage INTEREST = new Percentage(10);
     public static final Percentage CAPITAL_GAINS_TAX = new Percentage(25);
 
-    private TabulatedModel model;
+    private TableStructure model;
     private AccountYear startingYear;
 
     class TestListener implements TableModelListener {
@@ -37,7 +38,7 @@ public class TableFrameTest {
     public void setup() {
         startingYear = new AccountYear(STARTING_YEAR, STARTING_PRINCIPAL, STARTING_PROFIT, INTEREST, CAPITAL_GAINS_TAX);
         AccountProjection projection = new AccountProjection(DURATION, startingYear);
-        model = new TabulatedModel(projection);
+        model = new TableStructure(projection);
     }
 
     @Test
@@ -91,18 +92,18 @@ public class TableFrameTest {
     @Test
     @SuppressWarnings("serial")
     public void tableShouldHaveSelfRenderableObjectRenderThemselves() {
-        SelfRenderable renderable = new SelfRenderable() {
-            public void render(JLabel label) {
-                label.setText("I rendered myself");
+        SelfRendering selfRendering = new SelfRendering() {
+            public void render(Resource resource, RenderSubject subject) {
+                subject.setText("I rendered myself");
             }
         };
         DefaultTableModel tableModel = new DefaultTableModel(0, 1) {
             public Class<?> getColumnClass(int column) {
-                return SelfRenderable.class;
+                return SelfRendering.class;
             }
         };
-        tableModel.addRow(new SelfRenderable[] { renderable });
-        JTable table = new TableFrame(tableModel);
+        tableModel.addRow(new SelfRendering[] { selfRendering });
+        JTable table = new Table(tableModel);
         assertEquals("I rendered myself", getCellText(table, 0, 0));
     }
 

@@ -6,7 +6,7 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-public class TabulatedModelTest {
+public class TableStructureTest {
     private static final Year STARTING_YEAR = Year.parse("-2020");
     private static final Euro STARTING_PRINCIPAL = new Euro(7000);
     private static final Euro STARTING_BALANCE = new Euro(3000);
@@ -14,14 +14,14 @@ public class TabulatedModelTest {
     private static final Percentage CAPITAL_GAINS_TAX = new Percentage(25);
 
     private AccountYear startingYear;
-    private TabulatedModel model;
+    private TableStructure model;
 
     @Before
     public void setup() {
         startingYear = new AccountYear(STARTING_YEAR, STARTING_PRINCIPAL, STARTING_BALANCE, INTEREST,
                 CAPITAL_GAINS_TAX);
         AccountProjection projection = new AccountProjection(40, startingYear);
-        model = new TabulatedModel(projection);
+        model = new TableStructure(projection);
     }
 
     @Test

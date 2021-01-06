@@ -1,26 +1,30 @@
 package finances.domain;
 
-import javax.swing.*;
+import finances.ui.RenderSubject;
+import finances.util.Resource;
+
 import java.awt.*;
 import java.util.Calendar;
 
 public class ValidYear extends Year {
     private int year;
+    private int currentYear = Calendar.getInstance().get(Calendar.YEAR);
 
     public ValidYear(int year) {
         this.year = year;
     }
 
     public Year subsequentYear() {
+        if (this.year >= currentYear + super.MAX_TIME_TO_INVEST) return new InvalidYear();
         return new ValidYear(this.year + 1);
     }
 
-    public void render(JLabel label) {
-        label.setText(this.toString());
-        label.setIcon(null);
-        label.setToolTipText(null);
-        label.setForeground(Color.BLACK);
-        if (this.year < Calendar.getInstance().get(Calendar.YEAR)) label.setForeground(Color.RED);
+    public void render(Resource resource, RenderSubject renderSubject) {
+        renderSubject.setText(this.toString());
+        renderSubject.setIcon(null);
+        renderSubject.setToolTipText(null);
+        renderSubject.setForegroundColor(Color.BLACK);
+        if (this.year < currentYear) renderSubject.setForegroundColor(Color.RED);
     }
 
     @Override

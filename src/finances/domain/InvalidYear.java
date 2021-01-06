@@ -1,8 +1,9 @@
 package finances.domain;
 
-import javax.swing.*;
+import finances.ui.RenderSubject;
+import finances.util.Resource;
+
 import java.awt.*;
-import java.net.URL;
 
 public class InvalidYear extends Year{
     @Override
@@ -17,7 +18,7 @@ public class InvalidYear extends Year{
 
     @Override
     public String toString() {
-        return "YEAR ???";
+        return "INVALID YEAR";
     }
 
     @Override
@@ -30,11 +31,11 @@ public class InvalidYear extends Year{
         return (obj instanceof InvalidYear);
     }
 
-    public void render(JLabel label) {
-        URL iconUrl = getClass().getResource("invalid_year.gif");
-        label.setIcon(new ImageIcon(iconUrl, "Invalid year entry"));
-        label.setText(null);
-        label.setToolTipText(null);
-        label.setForeground(Color.RED);
+    public void render(Resource resource, RenderSubject subject) {
+        subject.setIcon(resource.invalidYearIcon());
+        subject.setText(null);
+        subject.setToolTipText("Invalid year");
+        subject.setForegroundColor(Color.RED);
     }
+
 }

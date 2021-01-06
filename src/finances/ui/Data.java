@@ -2,8 +2,10 @@ package finances.ui;
 
 import finances.domain.*;
 
-public class ProjectionModel {
-    public static Year DEFAULT_STARTING_YEAR = new ValidYear(2020);
+import java.util.Calendar;
+
+public class Data {
+    public Year DEFAULT_STARTING_YEAR = new ValidYear(Calendar.getInstance().get(Calendar.YEAR));
     public static int DEFAULT_DURATION = 40;
     public static Euro DEFAULT_PRINCIPAL = new Euro(10000);
     public static Euro DEFAULT_GAINS = new Euro(3000);
@@ -17,10 +19,10 @@ public class ProjectionModel {
     private Percentage interest = DEFAULT_INTEREST;
     private Percentage capitalGainsTax = DEFAULT_CAPITAL_GAINS_TAX;
 
-    private TabulatedModel tabulatedModel = new TabulatedModel(accountProjection());
+    private TableStructure tableStructure = new TableStructure(accountProjection());
 
-    public TabulatedModel tabulatedModel() {
-        return tabulatedModel;
+    public TableStructure tabulatedModel() {
+        return tableStructure;
     }
 
     public AccountProjection accountProjection() {
@@ -31,7 +33,10 @@ public class ProjectionModel {
 
     public void setStartingYear(Year startingYear) {
         this.startingYear = startingYear;
-        tabulatedModel.setProjection(accountProjection());
+        tableStructure.setProjection(accountProjection());
     }
 
+    public Year startingYear() {
+        return this.startingYear;
+    }
 }
