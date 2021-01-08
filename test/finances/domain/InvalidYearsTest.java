@@ -1,5 +1,6 @@
 package finances.domain;
 
+import finances.ui.RenderSubjectStub;
 import finances.util.Resource;
 import org.junit.Before;
 import org.junit.Test;

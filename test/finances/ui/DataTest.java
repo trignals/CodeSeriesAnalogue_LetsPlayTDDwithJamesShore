@@ -19,7 +19,7 @@ public class DataTest {
 
     @Test
     public void shouldStartWithDefaultStockMarket() {
-        AccountProjection projection = model.tabulatedModel().accountProjection();
+        AccountProjection projection = model.getTableLayout().accountProjection();
 
         AccountYear startingYear = projection.year(0);
         assertEquals(new ValidYear(Calendar.getInstance().get(Calendar.YEAR)), startingYear.year());
@@ -30,13 +30,13 @@ public class DataTest {
 
     @Test
     public void shouldOnlyHaveOneInstanceOfTabulatedModel() {
-        assertTrue("should be same instance", model.tabulatedModel() == model.tabulatedModel());
+        assertTrue("should be same instance", model.getTableLayout() == model.getTableLayout());
     }
 
     @Test
     public void changingStartingYearShouldChangeProjectionModel() {
         model.setStartingYear(new ValidYear(2021));
-        assertEquals(new ValidYear(2021), model.tabulatedModel().startingYear());
+        assertEquals(new ValidYear(2021), model.getTableLayout().startingYear());
 
     }
 

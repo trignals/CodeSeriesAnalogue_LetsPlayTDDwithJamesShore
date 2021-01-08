@@ -1,5 +1,7 @@
 package finances.domain;
 
+import finances.ui.SelfRendering;
+
 import java.util.Calendar;
 
 public abstract class Year implements SelfRendering {

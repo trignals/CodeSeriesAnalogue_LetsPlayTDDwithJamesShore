@@ -1,5 +1,8 @@
-package finances.domain;
+package finances.ui;
 
+import finances.domain.InvalidYear;
+import finances.domain.ValidYear;
+import finances.ui.RenderSubjectStub;
 import finances.util.Resource;
 import org.junit.Before;
 import org.junit.Test;

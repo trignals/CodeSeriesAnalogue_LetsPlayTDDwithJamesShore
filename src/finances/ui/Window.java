@@ -1,7 +1,6 @@
 package finances.ui;
 
 import javax.swing.*;
-import javax.swing.event.*;
 import java.awt.*;
 
 public class Window extends JFrame {
@@ -27,22 +26,19 @@ public class Window extends JFrame {
         contentPane.add(BorderLayout.NORTH, startingYearField());
     }
 
-    public JTextField startingYearField() {
-        final YearInputField field = new YearInputField(data.startingYear());
+    private Component tableFrame() {
+        return new JScrollPane(new Table(data.getTableLayout()));
+    }
 
-        field.getDocument().addDocumentListener(new DocumentListener() {
-            @Override public void insertUpdate(DocumentEvent e) { updateStartingYear(); }
-            @Override public void removeUpdate(DocumentEvent e) { updateStartingYear(); }
-            @Override public void changedUpdate(DocumentEvent e) { updateStartingYear(); }
-            private void updateStartingYear() {
+    public JTextField startingYearField() {
+        final YearInputField field = new YearInputField(data.getStartingYear());
+        field.addTextChangedListener(new YearInputField.ChangeListener() {
+            @Override
+            public void textChanged() {
                 data.setStartingYear(field.getYear());
             }
         });
         return field;
-    }
-
-    private Component tableFrame() {
-        return new JScrollPane(new Table(data.tabulatedModel()));
     }
 
 }

@@ -1,5 +1,4 @@
 package finances.ui;
-import finances.domain.SelfRendering;
 import finances.util.Resource;
 
 import java.awt.*;
@@ -21,33 +20,6 @@ public class Table extends JTable {
     }
 
     private TableCellRenderer selfRenderer() {
-        class RenderLabel implements RenderSubject {
-            private JLabel label;
-
-            public RenderLabel(JLabel label) {
-                this.label = label;
-            }
-
-            @Override
-            public void setText(String text) {
-                label.setText(text);
-            }
-
-            @Override
-            public void setIcon(Icon icon) {
-                label.setIcon(icon);
-            }
-
-            @Override
-            public void setToolTipText(String text) {
-                label.setToolTipText(text);
-            }
-
-            @Override
-            public void setForegroundColor(Color colour) {
-                label.setForeground(colour);
-            }
-        }
         return new DefaultTableCellRenderer() {
             private static final long serialVersionUID = 1L;
             public void setValue(Object value) {
@@ -56,7 +28,6 @@ public class Table extends JTable {
             }
         };
     }
-
 
     @Override
     public Component prepareRenderer(TableCellRenderer renderer, int row, int column) {
@@ -72,6 +43,4 @@ public class Table extends JTable {
     private boolean oddRow(int row) {
         return row % 2 == 1;
     }
-
-
 }

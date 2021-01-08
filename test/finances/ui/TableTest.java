@@ -19,7 +19,7 @@ public class TableTest {
     public static final Percentage INTEREST = new Percentage(10);
     public static final Percentage CAPITAL_GAINS_TAX = new Percentage(25);
 
-    private TableStructure model;
+    private TableLayout model;
     private AccountYear startingYear;
 
     class TestListener implements TableModelListener {
@@ -38,29 +38,7 @@ public class TableTest {
     public void setup() {
         startingYear = new AccountYear(STARTING_YEAR, STARTING_PRINCIPAL, STARTING_PROFIT, INTEREST, CAPITAL_GAINS_TAX);
         AccountProjection projection = new AccountProjection(DURATION, startingYear);
-        model = new TableStructure(projection);
-    }
-
-    @Test
-    public void changingTheProjectionShouldChangeTableModel () {
-        AccountProjection projection = new AccountProjection(0, startingYear);
-        model.setProjection(projection);
-        assertEquals("projection should have changed", projection, model.accountProjection());
-        assertEquals("change to projection should reflect in methods", 1, model.getRowCount());
-    }
-
-    @Test
-    public void changingTheProjectionShouldFireUpdateEvent() {
-        AccountProjection projection = new AccountProjection(0, startingYear);
-        final boolean[] eventFired = { false };
-
-        TestListener listener = new TestListener();
-        model.addTableModelListener(listener);
-
-        model.setProjection(projection);
-        assertTrue("event should have fired", listener.eventFired);
-        assertEquals("whole table should change (first row)", 0, listener.firstRowChanged.intValue());
-        assertEquals("whole table should change (last row)", Integer.MAX_VALUE, listener.lastRowChanged.intValue());
+        model = new TableLayout(projection);
     }
 
     @Test
@@ -87,6 +65,27 @@ public class TableTest {
         assertEquals("Starting profit", STARTING_PROFIT, model.getValueAt(0, 5));
         assertEquals("Last year in forecast", new ValidYear(2060), model.getValueAt(40,0));
         assertEquals("Year 2 profit", new Euro(4050), model.getValueAt(1, 5));
+    }
+
+    @Test
+    public void changingTheProjectionShouldFireUpdateEvent() {
+        AccountProjection projection = new AccountProjection(0, startingYear);
+
+        TestListener listener = new TestListener();
+        model.addTableModelListener(listener);
+
+        model.setProjection(projection);
+        assertTrue("event should have fired", listener.eventFired);
+        assertEquals("whole table should change (first row)", 0, listener.firstRowChanged.intValue());
+        assertEquals("whole table should change (last row)", Integer.MAX_VALUE, listener.lastRowChanged.intValue());
+    }
+
+    @Test
+    public void changingTheProjectionShouldChangeTableModel () {
+        AccountProjection projection = new AccountProjection(0, startingYear);
+        model.setProjection(projection);
+        assertEquals("projection should have changed", projection, model.accountProjection());
+        assertEquals("change to projection should reflect in methods", 1, model.getRowCount());
     }
 
     @Test

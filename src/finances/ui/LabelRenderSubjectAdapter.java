@@ -7,7 +7,7 @@ class LabelRenderSubjectAdapter implements RenderSubject {
     private JLabel label;
 
     public LabelRenderSubjectAdapter(JLabel label) {
-       this.label =label;
+       this.label = label;
     }
 
     @Override

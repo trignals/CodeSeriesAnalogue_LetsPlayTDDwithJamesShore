@@ -13,6 +13,11 @@ public class WindowTest {
     private Window frame = new Window(model);
 
     @Test
+    public void startingYearShouldBeInitialisedToModelsValue() {
+        assertEquals("starting balance field text", model.getStartingYear(), Year.parse(frame.startingYearField().getText()));
+    }
+
+    @Test
     public void startingYearFieldShouldUpdateProjectionModelThroughAction() {
         class MockApplication extends Data {
             public Year setStartingYearCalledWith;
@@ -21,7 +26,6 @@ public class WindowTest {
             public void setStartingYear(Year startingYear) {
                 setStartingYearCalledWith = startingYear;
             }
-
         }
         MockApplication mockModel = new MockApplication();
         frame = new Window(mockModel);
@@ -30,10 +34,4 @@ public class WindowTest {
         field.setText("2035");
         assertEquals("ProjectionModel should be updated", new ValidYear(2035), mockModel.setStartingYearCalledWith);
     }
-
-    @Test
-    public void startingYearShouldBeInitialisedToModelsValue() {
-        assertEquals("starting balance field text", model.startingYear(), Year.parse(frame.startingYearField().getText()));
-    }
-
 }

@@ -16,7 +16,7 @@ import java.util.Calendar;
 public final class YearInputField extends JTextField {
     private static final long serialVersionID = 1L;
 
-    class YearInputFieldRenderSubjectAdapter implements RenderSubject {
+    private static class YearInputFieldRenderSubjectAdapter implements RenderSubject {
         private YearInputField field;
 
         public YearInputFieldRenderSubjectAdapter(YearInputField field) {
@@ -29,12 +29,10 @@ public final class YearInputField extends JTextField {
 
         @Override
         public void setIcon(Icon icon) {
-            // TODO implement?
         }
 
         @Override
         public void setToolTipText(String text) {
-            // TODO implement?
         }
 
         @Override
@@ -46,10 +44,20 @@ public final class YearInputField extends JTextField {
 
     public YearInputField(Year initialValue) {
         this.setText(initialValue.toString());
-        addDocumentListener();
+        addTextChangedListener(new ChangeListener() {
+                                   public void textChanged() {
+                                       getYear().render(new Resource(), new YearInputFieldRenderSubjectAdapter(YearInputField.this));
+                                   }
+                               }
+        );
     }
 
-    public void addDocumentListener() {
+
+    public Year getYear() {
+        return Year.parse(getText());
+    }
+
+    public void addTextChangedListener(ChangeListener listener) {
         this.getDocument().addDocumentListener(new DocumentListener() {
             @Override
             public void insertUpdate(DocumentEvent e) {
@@ -67,12 +75,12 @@ public final class YearInputField extends JTextField {
             }
 
             private void render() {
-                getYear().render(new Resource(), new YearInputFieldRenderSubjectAdapter(YearInputField.this));
+                listener.textChanged();
             }
         });
     }
 
-    public Year getYear() {
-        return Year.parse(getText());
+    public interface ChangeListener {
+        public void textChanged();
     }
 }

@@ -19,11 +19,8 @@ public class Data {
     private Percentage interest = DEFAULT_INTEREST;
     private Percentage capitalGainsTax = DEFAULT_CAPITAL_GAINS_TAX;
 
-    private TableStructure tableStructure = new TableStructure(accountProjection());
-
-    public TableStructure tabulatedModel() {
-        return tableStructure;
-    }
+    private AccountYear firstYear = new AccountYear(startingYear, principal, gains, interest, capitalGainsTax);
+    private TableLayout tableLayout = new TableLayout(accountProjection());
 
     public AccountProjection accountProjection() {
         AccountYear firstYear = new AccountYear(
@@ -31,12 +28,17 @@ public class Data {
         return new AccountProjection(duration, firstYear);
     }
 
-    public void setStartingYear(Year startingYear) {
-        this.startingYear = startingYear;
-        tableStructure.setProjection(accountProjection());
+    public TableLayout getTableLayout() {
+        return tableLayout;
     }
 
-    public Year startingYear() {
+    public void setStartingYear(Year startingYear) {
+        this.startingYear = startingYear;
+        tableLayout.setProjection(accountProjection());
+    }
+
+    public Year getStartingYear() {
         return this.startingYear;
     }
+
 }

@@ -5,7 +5,7 @@ import finances.util.UnreachableCodeException;
 
 import javax.swing.table.*;
 
-public class TableStructure extends AbstractTableModel {
+public class TableLayout extends AbstractTableModel {
     private static final long serialVersionUID = 1L;
     private static final String[] COLUMN_TITLES = {"Year", "Start Net Total", "Deposits", "Full-Term Principal",
             "Net Growth Rate Principal", "Full-Term Gains", "Net Growth Rate Gains", "Net Generated", "End Net Total"};
@@ -19,7 +19,7 @@ public class TableStructure extends AbstractTableModel {
         this.fireTableDataChanged();
     }
 
-    public TableStructure(AccountProjection projection) {
+    public TableLayout(AccountProjection projection) {
         this.projection = projection;
     }
 
